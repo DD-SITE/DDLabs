@@ -119,7 +119,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="name"
-            placeholder="John Doe"
+            placeholder="Divyam Dixit"
             iconSrc="/assets/icons/user.svg"
             iconAlt="user"
           />
@@ -131,7 +131,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="email"
               label="Email address"
-              placeholder="johndoe@gmail.com"
+              placeholder="divyamdixit@gmail.com"
               iconSrc="/assets/icons/email.svg"
               iconAlt="email"
             />
@@ -187,7 +187,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="address"
               label="Address"
-              placeholder="14 street, New york, NY - 5101"
+              placeholder="house no., area, city"
             />
 
             <CustomFormField
@@ -214,7 +214,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="emergencyContactNumber"
               label="Emergency contact number"
-              placeholder="(555) 123-4567"
+              placeholder="(91) 123-4567"
             />
           </div>
         </section>
@@ -255,7 +255,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="insuranceProvider"
               label="Insurance provider"
-              placeholder="BlueCross BlueShield"
+              placeholder="BlueShield"
             />
 
             <CustomFormField
@@ -282,7 +282,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="currentMedication"
               label="Current medications"
-              placeholder="Ibuprofen 200mg, Levothyroxine 50mcg"
+              placeholder="Ibuprofen 200mg, Paracetamol 500mg"
             />
           </div>
 

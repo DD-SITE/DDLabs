@@ -12,9 +12,9 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "CarePulse",
+  title: "DDLABS",
   description:
-    "A healthcare patient management System designed to streamline patient registration, appointment scheduling, and medical records management for healthcare providers.",
+    "A healthcare patient management platform designed to streamline patient registration, appointment scheduling, and medical records management for healthcare providers.",
   icons: {
     icon: "/assets/icons/logo-icon.svg",
   },
@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-dark-300 font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
