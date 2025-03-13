@@ -15,8 +15,7 @@ export const convertFileToUrl = (file: File) =>
 
 /** Format date and time with various presets */
 export const formatDateTime = (
-  dateInput: Date | string,
-  timeZone: string = Intl.DateTimeFormat().resolvedOptions().timeZone
+  dateInput: Date | string
 ) => {
   const date = new Date(dateInput);
 
@@ -28,26 +27,22 @@ export const formatDateTime = (
       hour: "numeric",
       minute: "numeric",
       hour12: true,
-      timeZone,
     },
     dateDay: {
       weekday: "short",
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-      timeZone,
     },
     dateOnly: {
       month: "short",
       year: "numeric",
       day: "numeric",
-      timeZone,
     },
     timeOnly: {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
-      timeZone,
     },
   };
 
