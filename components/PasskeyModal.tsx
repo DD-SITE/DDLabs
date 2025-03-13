@@ -27,39 +27,34 @@ export const PasskeyModal = () => {
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
-  const encryptedKey =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("accessKey")
-      : null;
-
   useEffect(() => {
-    const accessKey = encryptedKey && decryptKey(encryptedKey);
+    if (typeof window !== "undefined") {
+      const encryptedKey = window.localStorage.getItem("accessKey");
+      const accessKey = encryptedKey ? decryptKey(encryptedKey) : null;
 
-    if (path)
-      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
+      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
         setOpen(false);
         router.push("/admin");
       } else {
         setOpen(true);
       }
-  }, [encryptedKey]);
+    }
+  }, [path, router]); // ✅ Fix: Added `path` and `router` as dependencies
 
   const closeModal = () => {
     setOpen(false);
     router.push("/");
   };
 
-  const validatePasskey = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
       const encryptedKey = encryptKey(passkey);
-
       localStorage.setItem("accessKey", encryptedKey);
 
       setOpen(false);
+      router.push("/admin"); // ✅ Fix: Ensure redirection on successful authentication
     } else {
       setError("Invalid passkey. Please try again.");
     }
@@ -76,7 +71,7 @@ export const PasskeyModal = () => {
               alt="close"
               width={20}
               height={20}
-              onClick={() => closeModal()}
+              onClick={closeModal}
               className="cursor-pointer"
             />
           </AlertDialogTitle>
@@ -85,18 +80,11 @@ export const PasskeyModal = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div>
-          <InputOTP
-            maxLength={6}
-            value={passkey}
-            onChange={(value) => setPasskey(value)}
-          >
+          <InputOTP maxLength={6} value={passkey} onChange={setPasskey}>
             <InputOTPGroup className="shad-otp">
-              <InputOTPSlot className="shad-otp-slot" index={0} />
-              <InputOTPSlot className="shad-otp-slot" index={1} />
-              <InputOTPSlot className="shad-otp-slot" index={2} />
-              <InputOTPSlot className="shad-otp-slot" index={3} />
-              <InputOTPSlot className="shad-otp-slot" index={4} />
-              <InputOTPSlot className="shad-otp-slot" index={5} />
+              {Array.from({ length: 6 }).map((_, index) => (
+                <InputOTPSlot key={index} className="shad-otp-slot" index={index} />
+              ))}
             </InputOTPGroup>
           </InputOTP>
 
@@ -107,10 +95,7 @@ export const PasskeyModal = () => {
           )}
         </div>
         <AlertDialogFooter>
-          <AlertDialogAction
-            onClick={(e) => validatePasskey(e)}
-            className="shad-primary-btn w-full"
-          >
+          <AlertDialogAction onClick={validatePasskey} className="shad-primary-btn w-full">
             Enter Admin Passkey
           </AlertDialogAction>
         </AlertDialogFooter>
