@@ -1,18 +1,8 @@
+/* eslint-disable import/order */
 "use server";
 
 import { ID, InputFile, Query } from "node-appwrite";
-
-import {
-  BUCKET_ID,
-  DATABASE_ID,
-  ENDPOINT,
-  PATIENT_COLLECTION_ID,
-  PROJECT_ID,
-  databases,
-  storage,
-  users,
-} from "../appwrite.config";
-
+import { BUCKET_ID, DATABASE_ID, ENDPOINT, PATIENT_COLLECTION_ID, PROJECT_ID, databases, storage, users } from "../appwrite.config";
 import { parseStringify } from "../utils";
 
 interface CreateUserParams {
@@ -37,15 +27,13 @@ export const createUser = async (user: CreateUserParams) => {
       user.email,
       user.phone,
       undefined,
-      user.name,
+      user.name
     );
 
     return parseStringify(newUser);
   } catch (error: any) {
     if (error?.code === 409) {
-      const existingUser = await users.list([
-        Query.equal("email", [user.email]),
-      ]);
+      const existingUser = await users.list([Query.equal("email", [user.email])]);
       return existingUser.users[0];
     }
     console.error("Failed to create user:", error);
@@ -75,7 +63,7 @@ export const registerPatient = async ({
     if (identificationDocument) {
       const inputFile = InputFile.fromBlob(
         identificationDocument.get("blobFile") as Blob,
-        identificationDocument.get("fileName") as string,
+        identificationDocument.get("fileName") as string
       );
 
       const file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
@@ -92,7 +80,7 @@ export const registerPatient = async ({
         identificationDocumentId: fileId,
         identificationDocumentUrl: fileUrl,
         ...patient,
-      },
+      }
     );
 
     return parseStringify(newPatient);
@@ -107,7 +95,7 @@ export const getPatient = async (userId: string) => {
     const patients = await databases.listDocuments(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
-      [Query.equal("userId", [userId])],
+      [Query.equal("userId", [userId])]
     );
 
     return parseStringify(patients.documents[0]);
