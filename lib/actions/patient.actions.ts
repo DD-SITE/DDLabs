@@ -14,7 +14,6 @@ interface CreateUserParams {
 interface RegisterPatientParams {
   userId: string;
   name: string;
-  age: number;
   gender: string;
   identificationDocument?: FormData;
 }
